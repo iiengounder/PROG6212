@@ -4,7 +4,7 @@ using System.Text;
 
 namespace PET
 {
-    class Expense
+    public class Expense
     {
     }
 }

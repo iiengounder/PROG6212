@@ -5,8 +5,153 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PET"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Personal Expense Tracker" Height="680" Width="850" 
+        WindowStartupLocation="CenterScreen" Background="White">
     <Grid>
-
+        <!-- Create the main rows for the application -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="90"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="70"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Display the application heading -->
+        <Border Grid.Row="0" Background="SkyBlue">
+            <StackPanel VerticalAlignment="Center" Margin="30,0">
+                <TextBlock Text="Personal Expense Tracker" FontSize="30" 
+                           FontWeight="Bold" Foreground="Black"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="Keep track of your everyday expenses" 
+                           FontSize="15" Foreground="Black" FontStyle="Italic"
+                           FontWeight="Bold" HorizontalAlignment="Center"
+                           Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+        <!-- Main content area for Expenses-->
+        <Grid Grid.Row="1" Margin="30,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!-- Area used to add a new expense -->
+            <Grid Grid.Row="0" Margin="0,0,0,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!-- Display the add expense heading -->
+                <Border Grid.Row="0" Background="LightBlue" Padding="10">
+                    <TextBlock Text="Add New Expense" FontSize="20" FontWeight="Bold"/>
+                </Border>
+                <!-- Controls used to enter expense information -->
+                <Grid Grid.Row="1" Margin="10,15,10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <!-- Enter the expense description -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,12">
+                        <TextBlock Text="Description" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtDescription" Height="35" Padding="5"/>
+                    </StackPanel>
+                    <!-- Select the expense category -->
+                    <StackPanel Grid.Row="0" Grid.Column="2" Margin="0,0,0,12">
+                        <TextBlock Text="Category" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <ComboBox x:Name="cmbCategory" Height="35">
+                            <ComboBoxItem Content="Food"/>
+                            <ComboBoxItem Content="Transport"/>
+                            <ComboBoxItem Content="Entertainment"/>
+                            <ComboBoxItem Content="Utilities"/>
+                            <ComboBoxItem Content="Education"/>
+                            <ComboBoxItem Content="Other"/>
+                        </ComboBox>
+                    </StackPanel>
+                    <!-- Enter the amount spent -->
+                    <StackPanel Grid.Row="1" Grid.Column="0">
+                        <TextBlock Text="Amount (R)" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBox x:Name="txtAmount" Height="35" Padding="5"/>
+                    </StackPanel>
+                    <!-- Select the date of the expense -->
+                    <StackPanel Grid.Row="1" Grid.Column="2">
+                        <TextBlock Text="Date" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <DatePicker x:Name="dpDate" Height="35"/>
+                    </StackPanel>
+                </Grid>
+                <!-- Add the entered expense -->
+                <Button x:Name="btnAddExpense" Grid.Row="2" 
+                        Content="Add Expense" Width="150" 
+                        Height="40" HorizontalAlignment="Right" 
+                        Margin="0,8,10,0" Background="SkyBlue" 
+                        Foreground="Black" FontWeight="Bold" 
+                        FontSize="15"
+                        Click="btnAddExpense_Click"/>
+            </Grid>
+            <!-- Display the expense history -->
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!-- Expense history heading -->
+                <Border Grid.Row="0" Background="LightBlue" Padding="10">
+                    <TextBlock Text="Expense History" FontSize="20" FontWeight="Bold"/>
+                </Border>
+                <!-- Display all the expenses added by the user -->
+                <ListBox x:Name="lstExpenses" Grid.Row="1"
+                         Margin="0,10,0,0" FontSize="15" Background="White" 
+                         BorderBrush="Gray" BorderThickness="1" Padding="5"/>
+            </Grid>
+            <!-- Display the total amount spent -->
+            <Grid Grid.Row="2" Margin="0,15,0,0" 
+                  Background="LightGreen">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Total Expenses:" FontSize="20" 
+                           FontWeight="Bold" VerticalAlignment="Center" Margin="15"/>
+                <TextBlock x:Name="txtTotal" Grid.Column="1" Text="R0.00" 
+                           FontSize="25" FontWeight="Bold" Foreground="Green" 
+                           VerticalAlignment="Center" Margin="15"/>
+            </Grid>
+        </Grid>
+        <!-- Buttons used to manage the expense information -->
+        <Border Grid.Row="2" Background="LightGray">
+            <Grid Margin="30,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <!-- Delete the selected expense on the left-->
+                <Button x:Name="btnDelete" Grid.Column="0" 
+                        Content="Delete Expense" Width="130" Height="40" 
+                        Background="Red" Foreground="White" 
+                        FontWeight="Bold" FontSize="15" Click="btnDelete_Click"/>
+                <!-- Save, load and clear the expenses -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button x:Name="btnSave" Content="Save Expenses" 
+                            Width="125" Height="40" Margin="5,0" 
+                            Background="SkyBlue" Foreground="Black" 
+                            FontWeight="Bold" FontSize="15"
+                            Click="btnSave_Click"/>
+                    <Button x:Name="btnLoad" Content="Load Expenses" Width="125" 
+                            Height="40" Margin="5,0" Background="Green" 
+                            Foreground="Black" FontWeight="Bold" FontSize="15"
+                            Click="btnLoad_Click"/>
+                    <Button x:Name="btnClear" Content="Clear All" 
+                            Width="100" Height="40" Margin="5,0" 
+                            Background="Gray" Foreground="Black" 
+                            FontWeight="Bold" Click="btnClear_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
